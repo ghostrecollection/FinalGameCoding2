@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-    // SPEED
-    [SerializeField] float moveSpeed = 3f;
+    // NOTES TO ADD: Camera smoothing, jump, grounding
 
     // CHARACTER CONTROLLER
     private CharacterController controller;
@@ -15,12 +14,22 @@ public class PlayerCharacterController : MonoBehaviour
     // Script reference for move vector
     private PlayerInputManager input;
 
-    [SerializeField] GameObject mainCam;
-    [SerializeField] Transform cameraFollowTarget;
+    // Movements
+    [SerializeField] float walkSpeed = 3f;
+    [SerializeField] float jogSpeed = 5f;
+    [SerializeField] float jumpForce = 6f;
 
+
+
+    // CAMERA
+    // Camera Reference
+    [SerializeField] GameObject mainCam;
+    // Transform that is tracked for camera movement
+    [SerializeField] Transform cameraFollowTarget;
+    // Rotation and Sensitivity Inputs
     float xRotation;
     float yRotation;
-    public float mouseSensitivity = 100f;
+    public float mouseSensitivity = 20f;
 
 
 
@@ -53,11 +62,23 @@ public class PlayerCharacterController : MonoBehaviour
 
         if(input.move != Vector2.zero)
         {
-            speed = moveSpeed;
+            // Jogging
+            if (input.jog)
+            {
+                speed = jogSpeed;
+            }
+            else
+            {
+                speed = walkSpeed;
+            }
+
             targetRotation = Quaternion.LookRotation(inputDir).eulerAngles.y + mainCam.transform.rotation.eulerAngles.y;
             Quaternion rotation = Quaternion.Euler(0, targetRotation, 0);
-            // Smooths rotation
+            // Smooths movement rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10 * Time.deltaTime);
+
+            
+
 
         }
         Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
@@ -73,9 +94,10 @@ public class PlayerCharacterController : MonoBehaviour
     {
         // Uses mouse input from y to rotate on x
         xRotation += input.look.y * mouseSensitivity * Time.deltaTime;
-        xRotation = Mathf.Clamp (xRotation, -30, 70);
+        xRotation = Mathf.Clamp (xRotation, -20, 60);
         // Uses mouse input from x to rotate on y
         yRotation += input.look.x * mouseSensitivity * Time.deltaTime;
+
         Quaternion rotation = Quaternion.Euler (xRotation, yRotation, 0);
         cameraFollowTarget.rotation = rotation;
     }

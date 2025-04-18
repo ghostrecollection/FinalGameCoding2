@@ -9,6 +9,8 @@ public class PlayerInputManager : MonoBehaviour
     // Vector2 for storing inputs
     public Vector2 move;
     public Vector2 look;
+    public bool jog;
+    public bool jump;
 
 
     // OnMove Function through Input System
@@ -23,4 +25,17 @@ public class PlayerInputManager : MonoBehaviour
     {
         look = value.Get<Vector2>();
     }
+
+    // OnJog Function through Input System
+    void OnJog(InputValue value)
+    {
+        jog = value.isPressed;
+    }
+
+    // OnJump Function through Input System
+    void OnJump(InputValue value)
+    {
+        jump = value.isPressed;
+    }
+
 }
