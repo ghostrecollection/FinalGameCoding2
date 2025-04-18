@@ -5,36 +5,16 @@ using UnityEngine;
 
 public class PlayerCharacterController : MonoBehaviour
 {
+    // SPEED
+    [SerializeField] float speed = 3f;
 
     // CHARACTER CONTROLLER
     private CharacterController controller;
 
+    // MOVEMENT AND INPUTS
+    // Script reference for move vector
+    private PlayerInputManager input;
 
-    // MOVEMENT
-    // Movement input for controller
-    private Vector3 playerMovementInput;
-    // Velocity for gravity and jump
-    private Vector3 velocity;
-    // Inputs and bools for walk, jog, jump 
-    // May add a duck option later
-    public float walkSpeed = 3f;
-    public bool isWalking;
-
-    public float jogSpeed = 6f;
-    public bool isJogging;
-
-    public float jumpForce = 5f;
-
-    float currentSpeed;
-
-
-    // GROUNDING
-    // Negative value to pull the player down and ground them
-    private float gravity = -9.81f;
-    public bool isGrounded;
-
-
-   
 
 
 
@@ -44,6 +24,8 @@ public class PlayerCharacterController : MonoBehaviour
         // Time is true to real world time
         Time.timeScale = 1f;
 
+        // Grab Player Input Manager Script
+        input = GetComponent<PlayerInputManager>();
         // Grab Character Controller
         controller = GetComponent<CharacterController>();
 
@@ -56,30 +38,10 @@ public class PlayerCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-
        
-
-        // Movement Axis
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float zInput = Input.GetAxis("Vertical"); // zInput gets players w or s input which is -1 or 1
-
-        // Jogging Movement
-        if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
-        {
-            isJogging = true;
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            isJogging = false;
-        }
-
-        // Velocity Movement
-        velocity = transform.forward * zInput * currentSpeed + transform.right * horizontalInput * currentSpeed + Vector3.up * velocity.y;
-
         // Target direction based of the x and z inputs
-        Vector3 targetDirection = new Vector3(playerMovementInput.x, 0, playerMovementInput.y);
+        Vector3 targetDirection = new Vector3(input.move.x, 0, input.move.y);
+        controller.Move(targetDirection * speed * Time.deltaTime);
         // Target rotation -- player rotates to direction input
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         // Smooths rotation
@@ -87,45 +49,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     }
 
-    private void MovePlayer()
-    {
-        isGrounded = controller.isGrounded;
-        // If the player is grounded, the gravity resets
-        if (isGrounded)
-        {
-            // Small Downward force to keep the player grounded
-            velocity.y = -1f;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                velocity.y = jumpForce;
-            }
-        }
-        else
-        {
-            // Gravity is applied when player is in the air
-            velocity.y -= gravity * -2f * Time.deltaTime;
-        }
-
-        // Jogging
-        if (isJogging)
-        {
-            currentSpeed = jogSpeed;
-            // Debug.Log("Current Speed Jog:" + currentSpeed);
-        }
-        else
-        {
-            currentSpeed = walkSpeed;
-        }
-
-        // Move player on the x and z
-        controller.Move(playerMovementInput * currentSpeed * Time.deltaTime);
-        // Debug.Log("Current Speed:" + currentSpeed);
-        // Apply vertical movement (gravity and jumping)
-        controller.Move(velocity * Time.deltaTime);
-
-    }
-
+    
   
 
 
