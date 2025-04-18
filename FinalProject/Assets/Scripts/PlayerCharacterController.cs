@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerCharacterController : MonoBehaviour
 {
 
@@ -76,6 +77,13 @@ public class PlayerCharacterController : MonoBehaviour
 
         // Velocity Movement
         velocity = transform.forward * zInput * currentSpeed + transform.right * horizontalInput * currentSpeed + Vector3.up * velocity.y;
+
+        // Target direction based of the x and z inputs
+        Vector3 targetDirection = new Vector3(playerMovementInput.x, 0, playerMovementInput.y);
+        // Target rotation -- player rotates to direction input
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        // Smooths rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 20 * Time.deltaTime);
 
     }
 
