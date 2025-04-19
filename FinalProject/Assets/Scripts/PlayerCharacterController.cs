@@ -17,8 +17,14 @@ public class PlayerCharacterController : MonoBehaviour
     // Movements
     [SerializeField] float walkSpeed = 3f;
     [SerializeField] float jogSpeed = 5f;
-    [SerializeField] float jumpForce = 6f;
+    [SerializeField] float jumpForce = 7f;
 
+    // GROUNDING
+    [SerializeField] float gravity = -9.81f;
+    Vector3 velocity;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] LayerMask groundLayer;
+    public bool isGrounded;
 
 
     // CAMERA
@@ -60,6 +66,11 @@ public class PlayerCharacterController : MonoBehaviour
         // Target rotation -- player rotates to direction input
         float targetRotation = 0;
 
+        
+        velocity = Vector3.up * velocity.y;
+
+        JumpAndGravity();
+
         if(input.move != Vector2.zero)
         {
             // Jogging
@@ -79,7 +90,6 @@ public class PlayerCharacterController : MonoBehaviour
 
             
 
-
         }
         Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
         controller.Move(targetDirection * speed * Time.deltaTime);
@@ -92,10 +102,11 @@ public class PlayerCharacterController : MonoBehaviour
 
     void CameraRotation()
     {
-        // Uses mouse input from y to rotate on x
-        xRotation += input.look.y * mouseSensitivity * Time.deltaTime;
-        xRotation = Mathf.Clamp (xRotation, -20, 60);
         // Uses mouse input from x to rotate on y
+        // -= to invert mouse look
+        xRotation -= input.look.y * mouseSensitivity * Time.deltaTime;
+        xRotation = Mathf.Clamp (xRotation, -20, 60);
+        // Uses mouse input from y to rotate on x
         yRotation += input.look.x * mouseSensitivity * Time.deltaTime;
 
         Quaternion rotation = Quaternion.Euler (xRotation, yRotation, 0);
@@ -103,6 +114,31 @@ public class PlayerCharacterController : MonoBehaviour
     }
   
 
+    void JumpAndGravity()
+    {
+        // Checks if player is grounded
+        isGrounded = Physics.CheckSphere(groundCheck.position, .2f, groundLayer);
+        
+        if (isGrounded)
+        {
+            // Small Downward force to keep the player grounded
+            // velocity.y = -1f;
+            // If player is grounded and presses space -- run jump function
+            if (input.jump)
+            {
+                velocity.y = jumpForce;
+                input.jump = false;
+            }
 
+        }
+        else
+        {
+            // Gravity is applied when player is in the air
+            velocity.y -= gravity * -2f * Time.deltaTime;
+        }
+        // Apply vertical movement (gravity and jumping)
+        controller.Move(velocity * Time.deltaTime);
+
+    }
 
 }
