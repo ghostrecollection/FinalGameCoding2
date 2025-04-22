@@ -9,10 +9,12 @@ public class InteractableText : MonoBehaviour
     // NOTES: I want to add the slow reveal to the text as it pops up, maybe I'll add a fade animation
 
 
-    public GameObject interactTextContainer;
+    TextMeshPro interactTextContainer;
     // Bools to understand when player is near the text and when the text is showing
     public bool nearPlayer;
     public bool showingText;
+    // String for text
+    public string interactText;
     // Animator
     Animator anim;
 
@@ -41,22 +43,32 @@ public class InteractableText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        interactTextContainer = transform.GetChild(0).GetComponent<TextMeshPro>();
+        interactTextContainer.text = "";
     }
 
     // Shows container with text
     private void Show()
     {
-        interactTextContainer.SetActive(true);
-        anim.Play("Text_Animation_Test");
+        StartCoroutine(TypeText());
+        // anim.Play("Text_Animation_Test");
     }
 
     // Hides container with text
     private void Hide()
     {
-        interactTextContainer.SetActive(false);
+        interactTextContainer.text = "";
+        StopAllCoroutines();
     }
 
-
+    public IEnumerator TypeText()
+    {
+        foreach (char x in interactText)
+        {
+            interactTextContainer.text += x;
+            yield return new WaitForSeconds(0.05f);
+        }
+        yield break;
+    }
 
 }
