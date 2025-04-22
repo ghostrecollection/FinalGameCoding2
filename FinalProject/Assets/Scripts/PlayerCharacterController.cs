@@ -23,6 +23,12 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] float gravity = -9.81f;
     Vector3 velocity;
     public bool isGrounded;
+    // Layer for ground detection
+    public LayerMask groundLayer;
+    // Empty location at players feet
+    public Transform groundCheck;
+    // Raycast distance for ground detection
+    private float groundDistance;
 
 
     // CAMERA
@@ -92,6 +98,12 @@ public class PlayerCharacterController : MonoBehaviour
         controller.Move(targetDirection * speed * Time.deltaTime);
     }
 
+    private void FixedUpdate()
+    {
+        isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance);
+        Debug.DrawRay(groundCheck.position, Vector3.down, Color.yellow);
+    }
+
     private void LateUpdate()
     {
         CameraRotation();
@@ -113,38 +125,26 @@ public class PlayerCharacterController : MonoBehaviour
 
     void JumpAndGravity()
     {
-
         isGrounded = controller.isGrounded;
-        if (input.jump)
+        if (isGrounded)
         {
-            velocity.y = jumpForce;
-            input.jump = false;
+            if (input.jump)
+            {
+                velocity.y = jumpForce;
+                input.jump = false;
+            }
+        }
+        else
+        {
+            // Gravity is applied when player is in the air
+            velocity.y -= gravity * -2f * Time.deltaTime;
         }
         
-        // Gravity is applied when player is in the air
-        velocity.y -= gravity * -2f * Time.deltaTime;
         
-
         // Apply vertical movement (gravity and jumping)
         controller.Move(velocity * Time.deltaTime);
 
     }
 
-    // Need to fix only activates the isGrounded bool while moving and it flashes inbetween being grounded and not
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGrounded = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGrounded = false;
-        }
-    }
-
+    
 }
