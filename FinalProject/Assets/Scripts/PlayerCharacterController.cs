@@ -41,7 +41,7 @@ public class PlayerCharacterController : MonoBehaviour
     float yRotation;
     public float mouseSensitivity = 20f;
 
-
+    
 
 
     // Start is called before the first frame update
@@ -59,6 +59,8 @@ public class PlayerCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false; // Will need to make visible for options/inventory type screens, etc..
 
+        
+        
     }
 
     // Update is called once per frame
@@ -96,12 +98,16 @@ public class PlayerCharacterController : MonoBehaviour
         }
         Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
         controller.Move(targetDirection * speed * Time.deltaTime);
+
+        isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, groundLayer);
+        Debug.DrawRay(groundCheck.position, Vector3.down, Color.yellow);
+
+        
     }
 
     private void FixedUpdate()
     {
-        isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance);
-        Debug.DrawRay(groundCheck.position, Vector3.down, Color.yellow);
+        
     }
 
     private void LateUpdate()
@@ -125,20 +131,18 @@ public class PlayerCharacterController : MonoBehaviour
 
     void JumpAndGravity()
     {
-        isGrounded = controller.isGrounded;
-        if (isGrounded)
-        {
+        //isGrounded = controller.isGrounded;
+        //Debug.Log("is grounded?: " +  isGrounded);
+        
             if (input.jump)
             {
                 velocity.y = jumpForce;
-                input.jump = false;
+                input.jump = true;
             }
-        }
-        else
-        {
+        
             // Gravity is applied when player is in the air
             velocity.y -= gravity * -2f * Time.deltaTime;
-        }
+        
         
         
         // Apply vertical movement (gravity and jumping)
@@ -146,5 +150,11 @@ public class PlayerCharacterController : MonoBehaviour
 
     }
 
-    
+    private void Move()
+    {
+        
+    }
+
+
+
 }

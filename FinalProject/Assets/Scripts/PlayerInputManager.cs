@@ -36,6 +36,7 @@ public class PlayerInputManager : MonoBehaviour
     void OnJump(InputValue value)
     {
         jump = value.isPressed;
+        Debug.Log("value is pressed: " + value);
     }
 
 }
