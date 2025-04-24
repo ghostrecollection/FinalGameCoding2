@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-    // NOTES TO ADD: Camera smoothing, jump, grounding
+    // NOTES TO ADD: Camera smoothing, , grounding
 
     // CHARACTER CONTROLLER
     private CharacterController controller;
@@ -28,7 +28,7 @@ public class PlayerCharacterController : MonoBehaviour
     // Empty location at players feet
     public Transform groundCheck;
     // Raycast distance for ground detection
-    private float groundDistance;
+    private float groundDistance = .4f;
 
 
     // CAMERA
@@ -105,10 +105,6 @@ public class PlayerCharacterController : MonoBehaviour
         
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
 
     private void LateUpdate()
     {
@@ -131,30 +127,28 @@ public class PlayerCharacterController : MonoBehaviour
 
     void JumpAndGravity()
     {
-        //isGrounded = controller.isGrounded;
-        //Debug.Log("is grounded?: " +  isGrounded);
+        isGrounded = controller.isGrounded;
         
+        if(isGrounded )
+        {
             if (input.jump)
             {
                 velocity.y = jumpForce;
-                input.jump = true;
+                input.jump = false;
             }
-        
+        }
+        else
+        {
             // Gravity is applied when player is in the air
             velocity.y -= gravity * -2f * Time.deltaTime;
-        
-        
-        
+        }
+ 
         // Apply vertical movement (gravity and jumping)
         controller.Move(velocity * Time.deltaTime);
 
     }
 
-    private void Move()
-    {
-        
-    }
-
+    
 
 
 }
