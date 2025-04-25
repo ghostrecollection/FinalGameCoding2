@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-    // NOTES TO ADD: Camera smoothing, , grounding
+    // NOTES TO ADD: Camera smoothing 
 
     // CHARACTER CONTROLLER
     private CharacterController controller;

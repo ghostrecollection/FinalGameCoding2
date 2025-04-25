@@ -45,13 +45,14 @@ public class InteractableText : MonoBehaviour
     {
         interactTextContainer = transform.GetChild(0).GetComponent<TextMeshPro>();
         interactTextContainer.text = "";
+        anim = GetComponentInChildren<Animator>();
     }
+
 
     // Shows container with text
     private void Show()
     {
         StartCoroutine(TypeText());
-        // anim.Play("Text_Animation_Test");
     }
 
     // Hides container with text
@@ -65,6 +66,10 @@ public class InteractableText : MonoBehaviour
     {
         foreach (char x in interactText)
         {
+
+            // Currently Animating at the start
+            anim.Play("Text_Animation_Test");
+            
             interactTextContainer.text += x;
             yield return new WaitForSeconds(0.05f);
         }
