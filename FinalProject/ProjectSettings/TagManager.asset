@@ -7,6 +7,9 @@ TagManager:
   - CinemachineTarget
   - Ground
   - InteractText
+  - MainPath
+  - NearPath
+  - FarFromPath
   layers:
   - Default
   - TransparentFX
