@@ -129,7 +129,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         isGrounded = controller.isGrounded;
         
-        if(isGrounded )
+        if(isGrounded)
         {
             if (input.jump)
             {

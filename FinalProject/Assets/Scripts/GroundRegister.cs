@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Windows.WebCam;
 
@@ -12,38 +13,29 @@ public class GroundRegister : MonoBehaviour
 
     // Locational bools to know when the player is where
     [SerializeField] bool onMainPath, onNearPath, onFarFromPath;
-    // Script Reference
-    [SerializeField] PlayerCharacterController playerCharacterControllerScript;
-
-    [SerializeField] Ray ray;
-    [SerializeField] RaycastHit hit;
-
-    [SerializeField] float rayLength = .4f;
-
-
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        playerCharacterControllerScript = GetComponent<PlayerCharacterController>();
-        Physics.Raycast(playerCharacterControllerScript.groundCheck.position, Vector3.down, rayLength, playerCharacterControllerScript.groundLayer);
 
-        GroundCheck();
+       
     }
 
 
     // Tracks when player is at certain locations
-    private void GroundCheck()
+    private void OnTriggerEnter(Collider other)
     {
-        if (hit.transform.CompareTag("MainPath"))
+        if (other.gameObject.CompareTag("MainPath"))
         {
+            //Debug.Log("MainPath Collided:");
             // TRUE LOCATION
             onMainPath = true;
             onNearPath = false;
             onFarFromPath = false;
         }
 
-        if (hit.transform.CompareTag("NearPath"))
+        if (other.gameObject.CompareTag("NearPath"))
         {
             onMainPath = false;
             // TRUE LOCATION
@@ -51,7 +43,7 @@ public class GroundRegister : MonoBehaviour
             onFarFromPath = false;
         }
 
-        if (hit.transform.CompareTag("FarFromPath"))
+        if (other.gameObject.CompareTag("FarFromPath"))
         {
             onMainPath = false;
             onNearPath = false;
@@ -60,10 +52,32 @@ public class GroundRegister : MonoBehaviour
         }
 
 
-
-
     }
 
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("MainPath"))
+        {
+            // Exiting the area
+            onMainPath = false;
+            
+        }
+
+        if (other.gameObject.CompareTag("NearPath"))
+        {
+            // Exiting the area
+            onNearPath = false;
+            
+        }
+
+        if (other.gameObject.CompareTag("FarFromPath"))
+        {
+            // Exiting the area
+            onFarFromPath = true;
+        }
+
+    }
 
 
     // Update is called once per frame
