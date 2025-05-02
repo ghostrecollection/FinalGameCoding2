@@ -27,8 +27,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3902064063715536926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.07203588}
-  m_LocalScale: {x: 0.0156041775, y: 0.01560418, z: 0.0156041775}
+  m_LocalPosition: {x: 0, y: 0, z: 0.07203591}
+  m_LocalScale: {x: 0.015604179, y: 0.015604178, z: 0.015604179}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1122606947295897189}
@@ -100,8 +100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Test test test test test test test test test test test test test test test
-    test test ....
+  m_text: ..
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -317,7 +316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a425c9febbb38a04d85170f21f5c5703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactTextContainer: {fileID: 0}
   nearPlayer: 0
   showingText: 0
   interactText: 
+  playerTransform: {fileID: 0}
+  rotationSpeed: 5
+  textRotation: {fileID: 0}

@@ -18,6 +18,14 @@ public class InteractableText : MonoBehaviour
     // Animator
     Animator anim;
 
+    // Player transform reference
+    public Transform playerTransform;
+    // Speed of Rotation
+    public float rotationSpeed = 5f;
+    // Rotation empty gameobject ref
+    public Transform textRotation;
+
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -25,6 +33,8 @@ public class InteractableText : MonoBehaviour
             nearPlayer = true;
             Show();
             showingText = true;
+
+
         }
 
     }
@@ -69,11 +79,20 @@ public class InteractableText : MonoBehaviour
 
             // Currently Animating at the start
             anim.Play("Text_Animation_Test");
-            
+
             interactTextContainer.text += x;
             yield return new WaitForSeconds(0.05f);
         }
         yield break;
     }
 
+    private void Update()
+    {
+
+        // textRotation.transform.LookAt(playerTransform.position);
+        // Makes the text follow the players position in rotation
+        textRotation.transform.rotation = Quaternion.LookRotation((textRotation.position - playerTransform.position).normalized * Time.deltaTime);
+        // It currently flips when the player goes under it, may want to change this, 
+
+    }
 }

@@ -7,9 +7,10 @@ using UnityEngine.Windows.WebCam;
 public class GroundRegister : MonoBehaviour
 {
     // NOTES
-
     // Goal of this script is to register when the player is on the path versus when they
     // stray further and further away so different things can happen as a result
+
+    // 
 
     // Locational bools to know when the player is where
     [SerializeField] bool onMainPath, onNearPath, onFarFromPath;

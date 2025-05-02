@@ -14,10 +14,9 @@ public class Notes : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            isVisible = !isVisible;
-            objectRenderer.enabled = isVisible;
-        }
+        
+        isVisible = !isVisible;
+        objectRenderer.enabled = isVisible;
+        
     }
 }
