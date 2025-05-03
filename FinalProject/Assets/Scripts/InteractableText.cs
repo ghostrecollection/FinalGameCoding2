@@ -34,7 +34,6 @@ public class InteractableText : MonoBehaviour
             Show();
             showingText = true;
 
-
         }
 
     }
