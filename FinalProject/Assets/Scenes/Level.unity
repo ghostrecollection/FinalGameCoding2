@@ -3324,7 +3324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 3
-  jogSpeed: 6
+  jogSpeed: 10
   jumpForce: 8
   gravity: -9.81
   isGrounded: 0
