@@ -1,9 +1,159 @@
 fileFormatVersion: 2
-guid: d8f01eb35245beb48bbe6b3713854bc3
+guid: cefe9b7deae7a44eb99d3b33b6024725
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bark28_BarkGroupMat
+    second: {fileID: 2100000, guid: 3982809026b2d4d57acc6c8ff1a27fdf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark10Mat
+    second: {fileID: 2100000, guid: f0ee415d09a3e45daa0a451e1d6ff7f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark11Mat
+    second: {fileID: 2100000, guid: f55addd9735e7487182bbe41617a86d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark12Mat
+    second: {fileID: 2100000, guid: 5a9e890b9a0c5451fa5ec83cd8b47306, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark13Mat
+    second: {fileID: 2100000, guid: 3c723b3c5d93e447e94260505cbda924, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark14Mat
+    second: {fileID: 2100000, guid: 9454015b8e13843e2899627cf5959685, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark15Mat
+    second: {fileID: 2100000, guid: 886f40d88aac34f44955c07d81bb9a52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark16Mat
+    second: {fileID: 2100000, guid: 8d8cd1044b52649e29719c8b3825db80, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark17Mat
+    second: {fileID: 2100000, guid: 75b5d5849a6bc410ba0e49f2d17193fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark18Mat
+    second: {fileID: 2100000, guid: 98bdceec925e2424bb77156bdbd65fd6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark19Mat
+    second: {fileID: 2100000, guid: 9d305f5f17b0d4fd9855b5ec2f683df1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark1Mat
+    second: {fileID: 2100000, guid: 5947d3384e0ac410fb4d78f855af021e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark20Mat
+    second: {fileID: 2100000, guid: f182a9ead2e4a4d46b92121fae686c56, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark21Mat
+    second: {fileID: 2100000, guid: bcba5b51514f34946b7ee24cf516e736, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark22Mat
+    second: {fileID: 2100000, guid: f361c7999ed994462b38a16ae1df14e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark23Mat
+    second: {fileID: 2100000, guid: a6c2499e002474163b91177946f4ff7c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark24Mat
+    second: {fileID: 2100000, guid: abf2c584764ca47b2ba66d0a76007fee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark25Mat
+    second: {fileID: 2100000, guid: 2ad60973425f44d8aae2d979258d3413, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark26Mat
+    second: {fileID: 2100000, guid: ac0f91b1fdca2426da962ada0a62a8b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark27Mat
+    second: {fileID: 2100000, guid: c8edaa6a3b8034161acc3940eec1e749, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark2Mat
+    second: {fileID: 2100000, guid: 465295dc43c10475bbc212183453fb87, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark3Mat
+    second: {fileID: 2100000, guid: 1759eb6bb4d504db79c08fdc9c128915, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark4Mat
+    second: {fileID: 2100000, guid: 722d5308302974279b11bb7510087fc8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark5Mat
+    second: {fileID: 2100000, guid: 264f1b0effe2944a9a9ff319bfbd3f5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark6Mat
+    second: {fileID: 2100000, guid: 6830d88e47d24483ea3434ebaab1a239, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark7Mat
+    second: {fileID: 2100000, guid: c1f37af9b5d3f4e07909dc62fceacef0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark8Mat
+    second: {fileID: 2100000, guid: 2279c7163e6ef49e5aeada7afe2954cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_Bark9Mat
+    second: {fileID: 2100000, guid: 8d1f7c13cb0e94621b50cff9838481f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarkGroup_BarkMat
+    second: {fileID: 2100000, guid: 8dd03e4eac674418b921c835d458adf9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tree_BaseMat
+    second: {fileID: 2100000, guid: e8867a1348ebb40eab34479153f16188, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

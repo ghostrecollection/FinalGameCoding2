@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 72ee57e5d49542a4cb0abf3d2062d36a
+guid: 9276cf51ce9bb4735a7eb6413665460d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flower1_FlowerMat
+    second: {fileID: 2100000, guid: 9e63016839aa94032b37b5e884f9e540, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flower1_GrassBlade2Mat
+    second: {fileID: 2100000, guid: ea8532777d4cb49dc81386b005996807, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flower1_GrassBladeMat
+    second: {fileID: 2100000, guid: 4c66cbec1c8ef405cb1d264836236e76, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flower1_StemMat
+    second: {fileID: 2100000, guid: 76eec3391e17f4c61b9b96627139f987, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

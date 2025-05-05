@@ -7,7 +7,7 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MouseTunnel_Layer
-  m_DiffuseTexture: {fileID: 2800000, guid: c7637020763148843a0b1d48d17fe505, type: 3}
+  m_DiffuseTexture: {fileID: 2800000, guid: 932134e8dcbad403cbf20fd32b8fd4a1, type: 3}
   m_NormalMapTexture: {fileID: 0}
   m_MaskMapTexture: {fileID: 0}
   m_TileSize: {x: 20, y: 20}
