@@ -10,6 +10,7 @@ TagManager:
   - MainPath
   - NearPath
   - FarFromPath
+  - MM
   layers:
   - Default
   - TransparentFX

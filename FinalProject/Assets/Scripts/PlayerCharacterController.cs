@@ -18,6 +18,7 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] float walkSpeed = 3f;
     [SerializeField] float jogSpeed = 5f;
     [SerializeField] float jumpForce = 3f;
+    
 
     // GROUNDING
     [SerializeField] float gravity = -9.81f;
@@ -41,7 +42,13 @@ public class PlayerCharacterController : MonoBehaviour
     float yRotation;
     public float mouseSensitivity = 20f;
 
-    
+
+    // SOUND
+    // Specific audio clips
+    [SerializeField] AudioSource walkingSFX, landingSFX;
+
+
+
 
 
     // Start is called before the first frame update
@@ -59,8 +66,9 @@ public class PlayerCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false; // Will need to make visible for options/inventory type screens, etc..
 
-        
-        
+        walkingSFX = GameObject.FindGameObjectWithTag("MM").GetComponents<AudioSource>()[0];
+        landingSFX = GameObject.FindGameObjectWithTag("MM").GetComponents<AudioSource>()[1];
+
     }
 
     // Update is called once per frame
@@ -78,6 +86,12 @@ public class PlayerCharacterController : MonoBehaviour
 
         if(input.move != Vector2.zero)
         {
+
+            if (!walkingSFX.isPlaying)
+            {
+                walkingSFX.Play();
+            }
+
             // Jogging
             if (input.jog)
             {
@@ -96,6 +110,11 @@ public class PlayerCharacterController : MonoBehaviour
             
 
         }
+        else
+        {
+            walkingSFX.Stop();
+        }
+        
         Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
         controller.Move(targetDirection * speed * Time.deltaTime);
 
@@ -133,8 +152,11 @@ public class PlayerCharacterController : MonoBehaviour
         {
             if (input.jump)
             {
+
                 velocity.y = jumpForce;
                 input.jump = false;
+
+                landingSFX.Play();
             }
         }
         else
