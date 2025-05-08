@@ -135,7 +135,7 @@ public class PlayerCharacterController : MonoBehaviour
         // Uses mouse input from x to rotate on y
         // -= to invert mouse look
         xRotation -= input.look.y * mouseSensitivity * Time.deltaTime;
-        xRotation = Mathf.Clamp (xRotation, -20, 60);
+        xRotation = Mathf.Clamp (xRotation, -10, 40);
         // Uses mouse input from y to rotate on x
         yRotation += input.look.x * mouseSensitivity * Time.deltaTime;
 
