@@ -90,7 +90,7 @@ public class InteractableText : MonoBehaviour
 
         // textRotation.transform.LookAt(playerTransform.position);
         // Makes the text follow the players position in rotation
-        textRotation.transform.rotation = Quaternion.LookRotation((textRotation.position - playerTransform.position).normalized * Time.deltaTime);
+        textRotation.transform.rotation = Quaternion.LookRotation((textRotation.position - playerTransform.position).normalized);
         // It currently flips when the player goes under it, may want to change this, 
 
     }

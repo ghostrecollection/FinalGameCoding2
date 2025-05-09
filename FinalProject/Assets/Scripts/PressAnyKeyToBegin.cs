@@ -21,7 +21,7 @@ public class PressAnyKeyToBegin : MonoBehaviour
     private void Update()
     {
         // Uses any key input for scene loading
-        if (!keyPressed && Input.anyKeyDown)
+        if (!keyPressed && Input.GetKeyDown(KeyCode.Return))
         {
             keyPressed = true;
             SceneManager.LoadScene(1);

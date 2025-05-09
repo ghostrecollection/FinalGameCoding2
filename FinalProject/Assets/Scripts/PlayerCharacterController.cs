@@ -18,6 +18,7 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] float walkSpeed = 3f;
     [SerializeField] float jogSpeed = 5f;
     [SerializeField] float jumpForce = 3f;
+    bool jumpActive;
     
 
     // GROUNDING
@@ -47,7 +48,8 @@ public class PlayerCharacterController : MonoBehaviour
     // Specific audio clips
     [SerializeField] AudioSource walkingSFX, landingSFX;
 
-
+    // ANIMATION
+    private Animator anim;
 
 
 
@@ -66,62 +68,25 @@ public class PlayerCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false; // Will need to make visible for options/inventory type screens, etc..
 
+        // Assigning sound effects
         walkingSFX = GameObject.FindGameObjectWithTag("MM").GetComponents<AudioSource>()[0];
         landingSFX = GameObject.FindGameObjectWithTag("MM").GetComponents<AudioSource>()[1];
+
+        // Finding Animator
+        anim = GetComponentInChildren<Animator>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        float speed = 0;
-        // Target direction based of the x and z inputs
-        Vector3 inputDir = new Vector3(input.move.x, 0, input.move.y);
-        // Target rotation -- player rotates to direction input
-        float targetRotation = 0;
-
-        
-
+        // Movement
+        OnMove();
+        // Jump and Grounding
         JumpAndGravity();
-
-        if(input.move != Vector2.zero)
-        {
-
-            if (!walkingSFX.isPlaying)
-            {
-                walkingSFX.Play();
-            }
-
-            // Jogging
-            if (input.jog)
-            {
-                speed = jogSpeed;
-            }
-            else
-            {
-                speed = walkSpeed;
-            }
-
-            targetRotation = Quaternion.LookRotation(inputDir).eulerAngles.y + mainCam.transform.rotation.eulerAngles.y;
-            Quaternion rotation = Quaternion.Euler(0, targetRotation, 0);
-            // Smooths movement rotation
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10 * Time.deltaTime);
-
-            
-
-        }
-        else
-        {
-            walkingSFX.Stop();
-        }
-        
-        Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
-        controller.Move(targetDirection * speed * Time.deltaTime);
-
         isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, groundLayer);
         Debug.DrawRay(groundCheck.position, Vector3.down, Color.yellow);
 
-        
     }
 
 
@@ -152,7 +117,7 @@ public class PlayerCharacterController : MonoBehaviour
         {
             if (input.jump)
             {
-
+                anim.SetBool("jumpActive", jumpActive);
                 velocity.y = jumpForce;
                 input.jump = false;
 
@@ -170,7 +135,53 @@ public class PlayerCharacterController : MonoBehaviour
 
     }
 
-    
+    private void OnMove()
+    {
+        float speed = 0;
+        // Target direction based of the x and z inputs
+        Vector3 inputDir = new Vector3(input.move.x, 0, input.move.y);
+        // Target rotation -- player rotates to direction input
+        float targetRotation = 0;
+
+        if(input.move != Vector2.zero)
+        {
+
+            if (!walkingSFX.isPlaying)
+            {
+                walkingSFX.Play();
+            }
+
+            // Jogging
+            if (input.jog)
+            {
+                speed = jogSpeed;
+                // Animated Jog based off blend tree values
+                anim.SetFloat("Speed", 2);
+            }
+            else
+            {
+                speed = walkSpeed;
+                // Animated Walk based off blend tree values
+                anim.SetFloat("Speed", input.move.magnitude);
+            }
+
+            targetRotation = Quaternion.LookRotation(inputDir).eulerAngles.y + mainCam.transform.rotation.eulerAngles.y;
+            Quaternion rotation = Quaternion.Euler(0, targetRotation, 0);
+            // Smooths movement rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10 * Time.deltaTime);
+
+
+        }
+        else
+        {
+            walkingSFX.Stop();
+            // Animated Movement based off blend tree values
+            anim.SetFloat("Speed", 0);
+        }
+
+        Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
+        controller.Move(targetDirection * speed * Time.deltaTime);
+    }
 
 
 }
