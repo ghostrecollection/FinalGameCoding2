@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,8 @@ public class PlayerCharacterController : MonoBehaviour
     [SerializeField] float jogSpeed = 5f;
     [SerializeField] float jumpForce = 3f;
     bool jumpActive;
-    
+    public float currentSpeed = 0;
+
 
     // GROUNDING
     [SerializeField] float gravity = -9.81f;
@@ -50,8 +52,17 @@ public class PlayerCharacterController : MonoBehaviour
 
     // ANIMATION
     private Animator anim;
+    // Target floats to switch between animations in blend tree
+    float idleTarget = 0;
+    float walkTarget = 1;
+    float jogTarget = 2;
+    // Current Value the animator is at
+    float idleCurrentValue = 0;
+    float walkCurrentValue = 1;
+    static float startValue = 0;
+    // How long to switch between animations
+    float duration = 1f;
     
-
 
 
 
@@ -88,6 +99,8 @@ public class PlayerCharacterController : MonoBehaviour
         JumpAndGravity();
         isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, groundLayer);
         Debug.DrawRay(groundCheck.position, Vector3.down, Color.yellow);
+
+        
 
     }
 
@@ -139,7 +152,9 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void OnMove()
     {
-        float speed = 0;
+        currentSpeed = 0;
+        // Debug.Log($"currentSpeed: {currentSpeed}");
+        
         // Target direction based of the x and z inputs
         Vector3 inputDir = new Vector3(input.move.x, 0, input.move.y);
         // Target rotation -- player rotates to direction input
@@ -154,17 +169,28 @@ public class PlayerCharacterController : MonoBehaviour
             }
 
             // Jogging
-            if (input.jog)
+           if (input.jog)
             {
-                speed = jogSpeed;
+                currentSpeed = jogSpeed;
                 // Animated Jog based off blend tree values
-                anim.SetFloat("Speed", 2);
+                anim.SetFloat("Speed", jogTarget);
             }
             else
             {
-                speed = walkSpeed;
+                currentSpeed = walkSpeed;
                 // Animated Walk based off blend tree values
-                anim.SetFloat("Speed", input.move.magnitude);
+                if(currentSpeed < 0.5)
+                {
+                    // If the player slows to stop moving, smooth to idle animation
+                    StartCoroutine(LerpForTransition());
+                    anim.SetFloat("Speed", walkTarget);
+                }
+                else
+                {
+                    // If they are moving, keep playing walk animation
+                    anim.SetFloat("Speed", walkCurrentValue);
+                }
+                Debug.Log($"walk target: {walkTarget}");
             }
 
             targetRotation = Quaternion.LookRotation(inputDir).eulerAngles.y + mainCam.transform.rotation.eulerAngles.y;
@@ -172,18 +198,45 @@ public class PlayerCharacterController : MonoBehaviour
             // Smooths movement rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 10 * Time.deltaTime);
 
-
+            
         }
         else
         {
             walkingSFX.Stop();
             // Animated Movement based off blend tree values
-            anim.SetFloat("Speed", 0);
+            if (currentSpeed > 0)
+            {
+                // If the player is moving, smooth to walk animation
+                StartCoroutine(LerpForTransition());
+                anim.SetFloat("Speed", idleTarget);
+            }
+            else
+            {
+                // If they are not, just play idle animation
+                anim.SetFloat("Speed", idleCurrentValue);
+            }
+            Debug.Log($"idle target: {idleTarget}");
         }
 
         Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
-        controller.Move(targetDirection * speed * Time.deltaTime);
+        controller.Move(targetDirection * currentSpeed * Time.deltaTime);
+
+        
     }
 
+    IEnumerator LerpForTransition()
+    {
+        for (float f = 0; f <= duration; f += Time.deltaTime)
+        {
+            // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
+            idleTarget = Mathf.Lerp(idleTarget, walkTarget, f / duration);
+            // WALK BACK TO IDLE - smooth transition ^^
+            walkTarget = Mathf.Lerp(walkTarget, idleTarget, f / duration);
 
+
+            yield return null;
+        }
+        
+    }
+   
 }

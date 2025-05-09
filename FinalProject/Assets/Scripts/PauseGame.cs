@@ -75,6 +75,7 @@ public class PauseGame : MonoBehaviour
         // Lock cursor to middle of screen
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
         // Reloads the scene
         SceneManager.LoadScene(1);
     }

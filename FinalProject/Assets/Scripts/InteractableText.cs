@@ -18,6 +18,10 @@ public class InteractableText : MonoBehaviour
     // Animator
     Animator anim;
 
+    // To clamp the rotation
+    float xRotation;
+    float yRotation;
+
     // Player transform reference
     public Transform playerTransform;
     // Speed of Rotation
@@ -88,9 +92,12 @@ public class InteractableText : MonoBehaviour
     private void Update()
     {
 
-        // textRotation.transform.LookAt(playerTransform.position);
         // Makes the text follow the players position in rotation
         textRotation.transform.rotation = Quaternion.LookRotation((textRotation.position - playerTransform.position).normalized);
+
+        Quaternion rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        // Clamps the rotation to prevent flipping
+        xRotation = Mathf.Clamp (xRotation, 20, 40);
         // It currently flips when the player goes under it, may want to change this, 
 
     }
