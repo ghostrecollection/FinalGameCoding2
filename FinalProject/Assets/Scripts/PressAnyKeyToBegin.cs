@@ -12,6 +12,7 @@ public class PressAnyKeyToBegin : MonoBehaviour
     
     private void Start()
     {
+        Time.timeScale = 1;
         // Lock cursor to middle of screen
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false; // Will need to make visible for options/inventory type screens, etc..

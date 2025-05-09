@@ -40203,9 +40203,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cb5361d988b1541bac1312dad6af87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  jogSpeed: 9
-  jumpForce: 8
+  walkSpeed: 4
+  jogSpeed: 8
+  jumpForce: 6.5
   gravity: -9.81
   isGrounded: 0
   groundLayer:

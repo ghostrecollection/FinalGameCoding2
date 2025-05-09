@@ -50,6 +50,8 @@ public class PlayerCharacterController : MonoBehaviour
 
     // ANIMATION
     private Animator anim;
+    
+
 
 
 
