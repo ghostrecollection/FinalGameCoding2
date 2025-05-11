@@ -60,7 +60,7 @@ public class PlayerCharacterController : MonoBehaviour
     // Current Value the animator is at
     float idleCurrentValue = 0;
     float walkCurrentValue = 1;
-    static float startValue = 0;
+    // static float startValue = 0;
     // How long to switch between animations
     float duration = 2f;
     
