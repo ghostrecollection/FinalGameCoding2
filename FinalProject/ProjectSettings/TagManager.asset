@@ -11,6 +11,7 @@ TagManager:
   - NearPath
   - FarFromPath
   - MM
+  - CameraRef
   layers:
   - Default
   - TransparentFX

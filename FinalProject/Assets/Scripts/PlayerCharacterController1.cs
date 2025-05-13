@@ -16,7 +16,7 @@ public class PlayerCharacterController1 : MonoBehaviour
     // Movements
     float walkSpeed = 5f;
     float jogSpeed = 8f;
-    float jumpForce = 6f;
+    float jumpForce = 7f;
     bool jumpActive;
     public float currentSpeed = 0;
 
@@ -205,7 +205,7 @@ public class PlayerCharacterController1 : MonoBehaviour
             if (currentSpeed > 0)
             {
                 // If the player is moving, smooth to walk animation
-                StartCoroutine(IdleToWalkTransition());
+                // StartCoroutine(IdleToWalkTransition());
                 anim.SetFloat("Speed", idleTarget);
             }
             else
@@ -225,6 +225,32 @@ public class PlayerCharacterController1 : MonoBehaviour
 
     IEnumerator IdleToWalkTransition()
     {
+        yield return new WaitForSeconds(1f);
+        float t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / 2f;
+            // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
+            anim.SetFloat("Speed", t);
+            yield return null;
+        }
+        
+    }
+
+
+
+    /*IEnumerator WalkToIdleTransition()
+    {
+        for (float f = 0; f <= duration; f += Time.deltaTime)
+        {
+            // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
+            idleTarget = Mathf.Lerp(walkTarget, idleTarget, f / duration);
+
+
+            yield return null;
+        }
+
+
         for (float f = 0; f <= duration; f += Time.deltaTime)
         {
             // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
@@ -240,22 +266,7 @@ public class PlayerCharacterController1 : MonoBehaviour
             }
 
 
-
             yield return null;
         }
-
-    }
-
-    /*IEnumerator WalkToIdleTransition()
-    {
-        for (float f = 0; f <= duration; f += Time.deltaTime)
-        {
-            // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
-            idleTarget = Mathf.Lerp(walkTarget, idleTarget, f / duration);
-
-
-            yield return null;
-        }
-
     }*/
 }
