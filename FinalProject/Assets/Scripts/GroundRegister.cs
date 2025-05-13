@@ -18,6 +18,11 @@ public class GroundRegister : MonoBehaviour
     // Animator
     Animator anim;
 
+    public float clipPlane;
+    public float normalClip = 220f;
+    public float distressClip = 85f;
+
+
     // Movement Script
     //PlayerCharacterController1 playerCharacterScript;
     
@@ -25,20 +30,20 @@ public class GroundRegister : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (virtualCamera == null)
-        {
-            Debug.LogWarning("No CinemachineVirtualCamera assigned. Assign one in the inspector.");
-            return;
-        }
-
         anim = GetComponentInChildren<Animator>();
 
         /*playerCharacterScript = GetComponent<PlayerCharacterController1>();
         float walkValue = playerCharacterScript.walkSpeed;
         float runValue = playerCharacterScript.runSpeed;*/
+
+        clipPlane = normalClip;
+       
     }
 
-
+    void Update()
+    {
+        clipPlane = Mathf.MoveTowards(clipPlane, distressClip, 85f * Time.deltaTime);
+    }
     // Tracks when player is at certain locations
     private void OnTriggerEnter(Collider other)
     {
@@ -59,7 +64,8 @@ public class GroundRegister : MonoBehaviour
             // TRUE LOCATION
             onFarFromPath = true;
 
-            virtualCamera.m_Lens.FarClipPlane = 85f;
+            
+            virtualCamera.m_Lens.FarClipPlane = clipPlane;
 
             anim.Play("Nervous");
             //StartCoroutine(PausePlayerMovement());

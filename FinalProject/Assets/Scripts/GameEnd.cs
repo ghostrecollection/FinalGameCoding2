@@ -10,6 +10,10 @@ public class GameEnd : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            // Turns mouse back on
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             SceneManager.LoadScene(2);
         }
     }
