@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GroundRegister : MonoBehaviour
 {
@@ -11,14 +12,30 @@ public class GroundRegister : MonoBehaviour
     // 
 
     // Locational bools to know when the player is where
-    [SerializeField] bool onMainPath, onNearPath, onFarFromPath;
+    [SerializeField] bool onMainPath, onFarFromPath;
+    // Camera reference
+    public CinemachineVirtualCamera virtualCamera;
+    // Animator
+    Animator anim;
+
+    // Movement Script
+    //PlayerCharacterController1 playerCharacterScript;
     
 
     // Start is called before the first frame update
     void Start()
     {
-        
-       
+        if (virtualCamera == null)
+        {
+            Debug.LogWarning("No CinemachineVirtualCamera assigned. Assign one in the inspector.");
+            return;
+        }
+
+        anim = GetComponentInChildren<Animator>();
+
+        /*playerCharacterScript = GetComponent<PlayerCharacterController1>();
+        float walkValue = playerCharacterScript.walkSpeed;
+        float runValue = playerCharacterScript.runSpeed;*/
     }
 
 
@@ -30,29 +47,25 @@ public class GroundRegister : MonoBehaviour
             //Debug.Log("MainPath Collided:");
             // TRUE LOCATION
             onMainPath = true;
-            onNearPath = false;
             onFarFromPath = false;
+
+            virtualCamera.m_Lens.FarClipPlane = 220f;
         }
 
-        if (other.gameObject.CompareTag("NearPath"))
-        {
-            onMainPath = false;
-            // TRUE LOCATION
-            onNearPath = true;
-            onFarFromPath = false;
-        }
-
+       
         if (other.gameObject.CompareTag("FarFromPath"))
         {
             onMainPath = false;
-            onNearPath = false;
             // TRUE LOCATION
             onFarFromPath = true;
+
+            virtualCamera.m_Lens.FarClipPlane = 85f;
+
+            anim.Play("Nervous");
+            //StartCoroutine(PausePlayerMovement());
         }
 
-
     }
-
 
     private void OnTriggerExit(Collider other)
     {
@@ -63,21 +76,25 @@ public class GroundRegister : MonoBehaviour
             
         }
 
-        if (other.gameObject.CompareTag("NearPath"))
-        {
-            // Exiting the area
-            onNearPath = false;
-            
-        }
 
         if (other.gameObject.CompareTag("FarFromPath"))
         {
             // Exiting the area
-            onFarFromPath = true;
+            onFarFromPath = false;
+            virtualCamera.m_Lens.FarClipPlane = 220f;
         }
 
     }
 
 
+    /*IEnumerator PausePlayerMovement(float walkValue, float runValue)
+    {
+        walkValue = 0;
+        runValue = 0;
+        anim.Play("Nervous");
+        yield return new WaitForSeconds(4.5f);
+        walkValue = 5f;
+        runValue = 8f;
+    }*/
     
 }

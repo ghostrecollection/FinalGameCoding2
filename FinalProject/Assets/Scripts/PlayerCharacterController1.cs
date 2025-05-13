@@ -14,8 +14,8 @@ public class PlayerCharacterController1 : MonoBehaviour
     private PlayerInputManager input;
 
     // Movements
-    float walkSpeed = 5f;
-    float jogSpeed = 8f;
+    public static float walkSpeed = 5f;
+    public static float jogSpeed = 8f;
     float jumpForce = 7f;
     bool jumpActive;
     public float currentSpeed = 0;
@@ -148,7 +148,7 @@ public class PlayerCharacterController1 : MonoBehaviour
 
     }
 
-    private void OnMove()
+    public void OnMove()
     {
         currentSpeed = 0;
         // Debug.Log($"currentSpeed: {currentSpeed}");
