@@ -223,6 +223,7 @@ public class PlayerCharacterController1 : MonoBehaviour
 
     }
 
+    // This is the section I need help with it applies to the 
     IEnumerator IdleToWalkTransition()
     {
         yield return new WaitForSeconds(1f);
