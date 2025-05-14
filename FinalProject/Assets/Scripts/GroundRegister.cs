@@ -23,19 +23,20 @@ public class GroundRegister : MonoBehaviour
     public float distressClip = 85f;
 
 
-    // Movement Script
-    //PlayerCharacterController1 playerCharacterScript;
+    // Movement and Input Script
+    PlayerCharacterController1 playerCharacterScript;
+    PlayerInput inputManagerScript;
     
 
     // Start is called before the first frame update
     void Start()
     {
+        // Animator component reference
         anim = GetComponentInChildren<Animator>();
-
-        /*playerCharacterScript = GetComponent<PlayerCharacterController1>();
-        float walkValue = playerCharacterScript.walkSpeed;
-        float runValue = playerCharacterScript.runSpeed;*/
-
+        // Script Reference
+        playerCharacterScript = GetComponent<PlayerCharacterController1>();
+        inputManagerScript = GetComponent<PlayerInput>();
+        // Clip plane
         clipPlane = normalClip;
        
     }
@@ -68,8 +69,8 @@ public class GroundRegister : MonoBehaviour
             
             virtualCamera.m_Lens.FarClipPlane = clipPlane;
 
-            anim.Play("Nervous");
-            //StartCoroutine(PausePlayerMovement());
+            
+            StartCoroutine(PausePlayerMovement());
         }
 
     }
@@ -94,14 +95,23 @@ public class GroundRegister : MonoBehaviour
     }
 
 
-    /*IEnumerator PausePlayerMovement(float walkValue, float runValue)
+    IEnumerator PausePlayerMovement()
     {
-        walkValue = 0;
-        runValue = 0;
+        // Checking if these scripts are active and temp turns them off
+        if(playerCharacterScript != null)
+        {
+            playerCharacterScript.enabled = false; 
+        }
+        if(inputManagerScript != null)
+        {
+            inputManagerScript.enabled = false; 
+        }
+        // Plays animation and waits for a bit of time
         anim.Play("Nervous");
-        yield return new WaitForSeconds(4.5f);
-        walkValue = 5f;
-        runValue = 8f;
-    }*/
+        yield return new WaitForSeconds(2.5f);
+        // Turns the scripts back on 
+        playerCharacterScript.enabled = true;
+        inputManagerScript.enabled = true;
+    }
     
 }

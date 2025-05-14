@@ -9,6 +9,18 @@ public class PauseGame : MonoBehaviour
     public GameObject pauseScreen;
     private bool gameIsPaused;
 
+    // Movement and Input Script
+    PlayerCharacterController1 playerCharacterScript;
+    PlayerInput inputManagerScript;
+
+
+
+    void Start()
+    {
+        // Script Reference
+        playerCharacterScript = GetComponent<PlayerCharacterController1>();
+        inputManagerScript = GetComponent<PlayerInput>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -27,24 +39,44 @@ public class PauseGame : MonoBehaviour
 
     public void OnPause()
     {
-        // Pauses time and opens pause screen
+        
         if (gameIsPaused)
         {
+            // Makes game back to normal
             gameIsPaused = false;
             pauseScreen.SetActive(false);
             Time.timeScale = 1;
+
             // Lock cursor to middle of screen
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            // Turns the scripts back on 
+            playerCharacterScript.enabled = true;
+            inputManagerScript.enabled = true;
+            
         }
         else
         {
+            // Pauses time and opens pause screen
+
             gameIsPaused = true;
             pauseScreen.SetActive(true);
             Time.timeScale = 0;
+
             // Turns mouse back on
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            // Checking if these scripts are active and temp turns them off
+            if (playerCharacterScript != null)
+            {
+                playerCharacterScript.enabled = false;
+            }
+            if (inputManagerScript != null)
+            {
+                inputManagerScript.enabled = false;
+            }
         }
 
     }
@@ -58,6 +90,9 @@ public class PauseGame : MonoBehaviour
         gameIsPaused = false;
         pauseScreen.SetActive(false);
         Time.timeScale = 1;
+        // Turns the scripts back on 
+        playerCharacterScript.enabled = true;
+        inputManagerScript.enabled = true;
 
     }
 
