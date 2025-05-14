@@ -42,6 +42,7 @@ public class GroundRegister : MonoBehaviour
 
     void Update()
     {
+        // This is the section I need help with
         clipPlane = Mathf.MoveTowards(clipPlane, distressClip, 85f * Time.deltaTime);
     }
     // Tracks when player is at certain locations
