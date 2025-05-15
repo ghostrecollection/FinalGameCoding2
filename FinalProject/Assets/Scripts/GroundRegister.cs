@@ -45,7 +45,28 @@ public class GroundRegister : MonoBehaviour
     void Update()
     {
         // This is the section I need help with
-        clipPlane = Mathf.MoveTowards(clipPlane, distressClip, 85f * Time.deltaTime);
+        // This will always move the clipPlane toward distressClip every frame regardless of whether the player is actually far away from the path or not because 
+        // We need to update FarClipPlane in update!!
+        
+        // We need to update the actual cameras farclipplane 
+        float targetClip;
+        if (onFarFromPath)
+        {
+            // If true target is 85f lerp gradually shrinks clip plane
+            targetClip = distressClip;
+        }
+        else
+        {
+            // If false target is 220f lerp gradually expands clip plane again
+            targetClip = normalClip;
+        }
+
+        // Smooth transition based off of distance
+        clipPlane = Mathf.Lerp(clipPlane, targetClip, Time.deltaTime * 2f); //2f is the smoothing speed tweak as needed
+
+        // Apply to virtual camera every frame
+        virtualCamera.m_Lens.FarClipPlane = clipPlane;
+
     }
     // Tracks when player is at certain locations
     private void OnTriggerEnter(Collider other)

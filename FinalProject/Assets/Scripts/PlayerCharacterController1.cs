@@ -48,20 +48,14 @@ public class PlayerCharacterController1 : MonoBehaviour
     // Specific audio clips
     public AudioSource walkingSFX, landingSFX;
 
+
     // ANIMATION
     private Animator anim;
     // Target floats to switch between animations in blend tree
     float idleTarget = 0;
     float walkTarget = 1;
-    float jogTarget = 2;
-    // Current Value the animator is at
-    float idleCurrentValue = 0;
-    float walkCurrentValue = 1;
-    // static float startValue = 0;
-    // How long to switch between animations
-    float duration = 2f;
-
-
+    // Controls how fast the transition happens
+    public float smoothingSpeed = 1f;
 
 
     // Start is called before the first frame update
@@ -93,12 +87,11 @@ public class PlayerCharacterController1 : MonoBehaviour
     {
         // Movement
         OnMove();
+
         // Jump and Grounding
         JumpAndGravity();
         isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, groundLayer);
         Debug.DrawRay(groundCheck.position, Vector3.down, Color.yellow);
-
-
 
     }
 
@@ -150,6 +143,10 @@ public class PlayerCharacterController1 : MonoBehaviour
 
     public void OnMove()
     {
+        // Based on current movement state
+        // Replaces manual SetFloat(Speed, X) calls
+        float targetAnimSpeed = 0f;
+
         currentSpeed = 0;
         // Debug.Log($"currentSpeed: {currentSpeed}");
 
@@ -170,25 +167,16 @@ public class PlayerCharacterController1 : MonoBehaviour
             if (input.jog)
             {
                 currentSpeed = jogSpeed;
+
                 // Animated Jog based off blend tree values
-                anim.SetFloat("Speed", jogTarget);
+                // Before we were hard coding the value so it would SNAP to it
+                targetAnimSpeed = jogSpeed;
             }
             else
             {
                 currentSpeed = walkSpeed;
-                // Animated Walk based off blend tree values
-                if (currentSpeed < 0.5)
-                {
-                    // If the player slows to stop moving, smooth to idle animation
-                    //StartCoroutine(WalkToIdleTransition());
-                    anim.SetFloat("Speed", walkTarget);
-                }
-                else
-                {
-                    // If they are moving, keep playing walk animation
-                    anim.SetFloat("Speed", walkCurrentValue);
-                }
-                Debug.Log($"walk target: {walkTarget}");
+                targetAnimSpeed = walkTarget;
+
             }
 
             targetRotation = Quaternion.LookRotation(inputDir).eulerAngles.y + mainCam.transform.rotation.eulerAngles.y;
@@ -202,20 +190,15 @@ public class PlayerCharacterController1 : MonoBehaviour
         {
             walkingSFX.Stop();
             // Animated Movement based off blend tree values
-            if (currentSpeed > 0)
-            {
-                // If the player is moving, smooth to walk animation
-                // StartCoroutine(IdleToWalkTransition());
-                anim.SetFloat("Speed", idleTarget);
-            }
-            else
-            {
-                // If they are not, just play idle animation
-                anim.SetFloat("Speed", idleCurrentValue);
-            }
+            targetAnimSpeed = idleTarget;
 
-            Debug.Log($"idle target: {idleTarget}");
+            // Debug.Log($"idle target: {idleTarget}");
         }
+
+        // Smooth animation transition using lerp
+        float currentAnimSpeed = anim.GetFloat("Speed");
+        float smoothedSpeed = Mathf.Lerp(currentAnimSpeed, targetAnimSpeed, Time.deltaTime * smoothingSpeed);
+        anim.SetFloat("Speed", smoothedSpeed);
 
         Vector3 targetDirection = Quaternion.Euler(0, targetRotation, 0) * Vector3.forward;
         controller.Move(targetDirection * currentSpeed * Time.deltaTime);
@@ -223,51 +206,5 @@ public class PlayerCharacterController1 : MonoBehaviour
 
     }
 
-    // This is the section I need help with it applies to the 
-    IEnumerator IdleToWalkTransition()
-    {
-        yield return new WaitForSeconds(1f);
-        float t = 0;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / 2f;
-            // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
-            anim.SetFloat("Speed", t);
-            yield return null;
-        }
-        
-    }
-
-
-
-    /*IEnumerator WalkToIdleTransition()
-    {
-        for (float f = 0; f <= duration; f += Time.deltaTime)
-        {
-            // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
-            idleTarget = Mathf.Lerp(walkTarget, idleTarget, f / duration);
-
-
-            yield return null;
-        }
-
-
-        for (float f = 0; f <= duration; f += Time.deltaTime)
-        {
-            // IDLE TO WALK - smooth transition that takes idle value and walk value and moves towards using the duration
-            idleTarget = Mathf.Lerp(idleTarget, walkTarget, f / duration);
-            f += 0.5f * Time.deltaTime;
-
-            if (f > 1.0f)
-            {
-                float temp = walkTarget;
-                walkTarget = idleTarget;
-                idleTarget = temp;
-                f = 0.0f;
-            }
-
-
-            yield return null;
-        }
-    }*/
+   
 }
