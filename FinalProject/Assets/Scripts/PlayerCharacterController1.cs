@@ -55,7 +55,7 @@ public class PlayerCharacterController1 : MonoBehaviour
     float idleTarget = 0;
     float walkTarget = 1;
     // Controls how fast the transition happens
-    public float smoothingSpeed = 1f;
+    public float smoothingSpeed = 2f;
 
 
     // Start is called before the first frame update
@@ -192,7 +192,7 @@ public class PlayerCharacterController1 : MonoBehaviour
             // Animated Movement based off blend tree values
             targetAnimSpeed = idleTarget;
 
-            // Debug.Log($"idle target: {idleTarget}");
+            //Debug.Log($"idle target: {idleTarget}");
         }
 
         // Smooth animation transition using lerp
