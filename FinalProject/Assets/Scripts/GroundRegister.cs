@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class GroundRegister : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class GroundRegister : MonoBehaviour
 
     // Movement and Input Script
     PlayerCharacterController1 playerCharacterScript;
-    PlayerInput inputManagerScript;
+    private PlayerInput inputManagerScript;
     
 
     // Start is called before the first frame update
@@ -104,7 +105,7 @@ public class GroundRegister : MonoBehaviour
         }
         if(inputManagerScript != null)
         {
-            inputManagerScript.enabled = false; 
+            inputManagerScript.enabled = false;
         }
         // Plays animation and waits for a bit of time
         anim.Play("Nervous");

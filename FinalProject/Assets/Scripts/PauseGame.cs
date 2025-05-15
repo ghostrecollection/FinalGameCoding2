@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PauseGame : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PauseGame : MonoBehaviour
 
     // Movement and Input Script
     PlayerCharacterController1 playerCharacterScript;
-    PlayerInput inputManagerScript;
+    private PlayerInput inputManagerScript;
 
 
 
